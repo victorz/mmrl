@@ -10,6 +10,7 @@
     "relay-server": "bun run server/server.mjs"
   },
   "dependencies": {
+    "pinia": "^2.0.22",
     "vue": "^3.2.37"
   },
   "devDependencies": {

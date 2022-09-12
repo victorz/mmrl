@@ -17,9 +17,8 @@ export interface UserProfile {
 // https://api.tracker.gg/api/v2/rocket-league/standard/profile/steam/76561197990565694/segments/playlist?season=22
 // -> data: PlaylistSegment[]
 
-interface PlatformInfo {
+export interface PlatformInfo {
   platformSlug: string;
-  platformUserId: string | null;
   platformUserHandle: string;
   platformUserIdentifier: string;
   avatarUrl: string;
@@ -37,9 +36,12 @@ interface UserInfo {
   isSuspicious: boolean | null;
 }
 
-interface Segment {
+export interface Segment {
   type: "overview" | "playlist";
-  metadata: { name: string };
+  metadata: {
+    // "Lifetime" for "overview", playlist name for "playlist".
+    name: string;
+  };
 }
 
 type NumberValue = {
@@ -48,7 +50,7 @@ type NumberValue = {
   displayType: "Number" | "String";
 };
 
-interface OverviewSegment extends Segment {
+export interface OverviewSegment extends Segment {
   type: "overview";
   stats: {
     wins: NumberValue;
@@ -69,26 +71,31 @@ interface OverviewSegment extends Segment {
   };
 }
 
-interface PlaylistSegment {
+type DivisionName = string;
+export interface PlaylistSegment extends Segment {
   type: "playlist";
   attributes: { playlistId: number; season: number };
   stats: {
     tier: NumberValue & {
+      percentile: number;
       metadata: {
         iconUrl: string;
         name: string;
       };
     };
     division: NumberValue & {
+      percentile: number;
       metadata: {
-        name: string;
+        deltaDown: number;
+        deltaUp: number;
+        name: DivisionName;
       };
     };
     matchesPlayed: NumberValue;
     winStreak: NumberValue & {
-      metadata: { type: "win" };
+      metadata: { type: "win" | "loss" };
     };
-    rating: NumberValue;
+    rating: NumberValue & { percentile: number };
   };
 }
 
@@ -103,10 +110,11 @@ interface AvailableSeason {
 
 // /api/v1/rocket-league/distribution/:playlistId
 type PlaylistId = number;
+type PlaylistName = string;
 export interface Distribution {
   tiers: string[];
   divisions: string[];
-  playlists: { key: number; value: string }[];
+  playlists: { key: number; value: PlaylistName }[];
   data: {
     id: number;
     tier: number;
@@ -118,7 +126,7 @@ export interface Distribution {
   }[];
 }
 
-// https://api.tracker.gg/api/v1/rocket-league/player-history/mmr/:playerId (:playerId?)
+// https://api.tracker.gg/api/v1/rocket-league/player-history/mmr/:playerId?playlist=<playlistId>
 export type DistData = Record<
   number,
   {
