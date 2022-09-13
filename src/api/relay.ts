@@ -37,7 +37,7 @@ export function transform(profile: UserProfile): {
   const overview = profile.segments.find(isOverviewSegment);
 
   const playlistNames = new Map(
-    profile.availableSegments
+    profile.segments
       .filter(isPlaylistSegment)
       .map((s) => [s.attributes.playlistId, s.metadata.name])
   );
