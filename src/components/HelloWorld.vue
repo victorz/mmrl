@@ -10,8 +10,25 @@ onErrorCaptured((hook, target) => {
 <template>
   <Suspense>
     <TrackerData profile-id="victorz" />
-    <template #fallback>Loading...</template>
+    <template #fallback><span class="loading">Loading</span></template>
   </Suspense>
 </template>
 
-<style scoped></style>
+<style scoped>
+.loading::after {
+  animation: ellipsis 3s linear infinite;
+  content: "...";
+}
+
+@keyframes ellipsis {
+  from {
+    content: "...";
+  }
+  33% {
+    content: ".";
+  }
+  66% {
+    content: "..";
+  }
+}
+</style>
