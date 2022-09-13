@@ -25,10 +25,10 @@ onErrorCaptured((hook, target) => {
     content: "...";
   }
   33% {
-    content: ".";
+    content: ".\a0\a0";
   }
   66% {
-    content: "..";
+    content: "..\a0";
   }
 }
 </style>
