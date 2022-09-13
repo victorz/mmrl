@@ -9,7 +9,7 @@ onErrorCaptured((hook, target) => {
 
 <template>
   <Suspense>
-    <TrackerData user="victorz" />
+    <TrackerData profile-id="victorz" />
     <template #fallback>Loading...</template>
   </Suspense>
 </template>

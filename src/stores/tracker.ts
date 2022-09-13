@@ -15,7 +15,7 @@ export const useTrackerStore = defineStore("tracker", {
   actions: {
     async getTrackerData(platformId: string) {
       const data = await trackerData(platformId);
-      Object.assign(this, data);
+      this.$patch({ ...data });
     },
   },
 });
