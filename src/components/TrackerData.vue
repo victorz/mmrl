@@ -2,12 +2,10 @@
 import { useTrackerStore } from "../stores/tracker";
 
 const props = defineProps<{ profileId: string }>();
-
 const tracker = useTrackerStore();
 await tracker.getTrackerData(props.profileId);
-console.debug("current season:", tracker.currentSeason);
 </script>
 
-<template>Current season: "{{ tracker?.currentSeason }}"</template>
+<template>Current season: {{ tracker.currentSeason }}</template>
 
 <style scoped></style>
