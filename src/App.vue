@@ -1,13 +1,19 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from "./components/HelloWorld.vue";
+import { onErrorCaptured } from "vue";
 import Navigation from "./components/Navigation.vue";
+import TrackerData from "./components/TrackerData.vue";
+
+onErrorCaptured((hook, target) => {
+  console.error("error captured", hook, target);
+});
 </script>
 
 <template>
   <Navigation />
-  <HelloWorld />
+  <Suspense>
+    <TrackerData profile-id="victorz" />
+    <template #fallback><span class="loading">Loading</span></template>
+  </Suspense>
 </template>
 
 <style scoped></style>
