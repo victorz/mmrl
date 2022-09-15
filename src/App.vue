@@ -16,4 +16,21 @@ onErrorCaptured((hook, target) => {
   </Suspense>
 </template>
 
-<style scoped></style>
+<style scoped>
+.loading::after {
+  animation: ellipsis 3s linear infinite;
+  content: "...";
+}
+
+@keyframes ellipsis {
+  from {
+    content: "...";
+  }
+  33% {
+    content: ".\a0\a0";
+  }
+  66% {
+    content: "..\a0";
+  }
+}
+</style>
