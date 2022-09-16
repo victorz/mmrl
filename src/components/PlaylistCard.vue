@@ -3,7 +3,6 @@ import { computed } from "vue";
 import { Playlist } from "../stores/types";
 
 const { playlist } = defineProps<{ playlist: Playlist }>();
-console.debug(playlist.tier, playlist.rating);
 const percentile = computed(() =>
   playlist.rating.percentile < 50
     ? `Bottom ${playlist.rating.percentile} %`
@@ -11,9 +10,8 @@ const percentile = computed(() =>
 );
 const percentileColor = computed(
   () =>
-    `rgb(${(255 * (100 - playlist.rating.percentile)) / 100}, ${
-      (255 * playlist.rating.percentile) / 100
-    }, 0)`
+    // Color between red (hue 0deg) through yellow, green, and finally cyan (hue 180deg).
+    `hsl(${(180 * playlist.rating.percentile) / 100}deg, 100%, 50%)`
 );
 </script>
 
