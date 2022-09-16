@@ -33,17 +33,31 @@ watch(
 <style scoped>
 nav {
   display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+  background-color: var(--var-primary);
+  border: 1px solid var(--var-highlight);
+  border-radius: 8px 8px 0% 0%;
+  width: 100%;
+  padding: 0 16px;
 }
-input[type="radio"] {
+input {
   display: none;
 }
 
 label {
+  color: white;
   user-select: none;
   cursor: pointer;
+  padding: 8px;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
 }
 
 input:checked + label {
-  color: red;
+  text-shadow: 0px 0px 16px currentColor;
+  border-left: 1px solid #59003a;
+  border-right: 1px solid #59003a;
+  box-shadow: 0px 0px 16px #59003a;
 }
 </style>

@@ -1,11 +1,53 @@
 <script setup lang="ts">
+import { difference } from "ramda";
+import { computed } from "vue";
 import { useTrackerStore } from "../stores/tracker";
+import { Playlist } from "../stores/types";
+import PlaylistCard from "./PlaylistCard.vue";
 
 const props = defineProps<{ profileId: string }>();
 const tracker = useTrackerStore();
 await tracker.getTrackerData(props.profileId);
+
+const unranked = computed(
+  (): Playlist => tracker.playlists.find((p) => p.playlistName === "Un-Ranked")!
+);
+const ranked = computed((): Playlist[] =>
+  tracker.playlists.filter((p) => p.playlistName.includes("Ranked "))
+);
+const tournaments = computed(
+  (): Playlist =>
+    tracker.playlists.find((p) => p.playlistName.includes("Tournament"))!
+);
+const extra = computed(() =>
+  difference(tracker.playlists, [
+    unranked.value,
+    tournaments.value,
+    ...ranked.value,
+  ])
+);
 </script>
 
-<template>Current season: {{ tracker.currentSeason }}</template>
+<template>
+  <div class="ranks">
+    <section>
+      <PlaylistCard v-for="playlist in ranked" :playlist="playlist" />
+    </section>
+    <section>
+      <PlaylistCard v-for="playlist in extra" :playlist="playlist" />
+    </section>
+    <section>
+      <PlaylistCard :playlist="unranked" />
+      <PlaylistCard :playlist="tournaments" />
+    </section>
+  </div>
+</template>
 
-<style scoped></style>
+<style scoped>
+.ranks {
+  width: 100%;
+  /* max-width: 1280px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+</style>
