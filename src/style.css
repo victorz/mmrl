@@ -17,6 +17,9 @@
 
 #app {
   box-sizing: border-box;
+  width: 100%;
+  min-width: 720px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 2rem;
 }
