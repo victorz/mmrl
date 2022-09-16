@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
+import { TabName } from "./types";
 
-const activeTab = ref("overview");
+const emit = defineEmits<{
+  (event: "changetab", tabName: TabName): void;
+}>();
+
+const activeTab = ref<TabName>(TabName.Overview);
 
 watch(
   () => activeTab.value,
-  () => console.log(activeTab.value)
+  () => emit("changetab", activeTab.value)
 );
 </script>
 
