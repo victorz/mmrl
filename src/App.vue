@@ -12,6 +12,7 @@ onErrorCaptured((hook, target) => {
   <Navigation />
   <Suspense>
     <TrackerData profile-id="victorz" />
+    <!-- TODO: add a loading component, maybe that animates through all of the ranked icons -->
     <template #fallback><span class="loading">Loading</span></template>
   </Suspense>
 </template>

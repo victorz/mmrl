@@ -38,7 +38,6 @@ nav {
   background-color: var(--var-primary);
   border: 1px solid var(--var-highlight);
   border-radius: 8px 8px 0% 0%;
-  width: 100%;
   padding: 0 16px;
 }
 input {

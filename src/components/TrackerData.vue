@@ -40,13 +40,13 @@ const extra = computed(() =>
       <PlaylistCard :playlist="unranked" />
       <PlaylistCard :playlist="tournaments" />
     </section>
+    <!-- TODO: add season reward level here, with number of wins and icon and stuff -->
   </div>
 </template>
 
 <style scoped>
 .ranks {
-  width: 100%;
-  /* max-width: 1280px; */
+  padding-top: 16px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
