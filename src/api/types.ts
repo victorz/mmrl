@@ -109,12 +109,12 @@ interface AvailableSeason {
 }
 
 // /api/v1/rocket-league/distribution/:playlistId
-type PlaylistId = number;
-type PlaylistName = string;
+export type PlaylistId = number;
+export type PlaylistName = string;
 export interface Distribution {
   tiers: string[];
   divisions: string[];
-  playlists: { key: number; value: PlaylistName }[];
+  playlists: { key: PlaylistId; value: PlaylistName }[];
   data: {
     id: number;
     tier: number;
@@ -127,14 +127,12 @@ export interface Distribution {
 }
 
 // https://api.tracker.gg/api/v1/rocket-league/player-history/mmr/:playerId?playlist=<playlistId>
-export type DistData = Record<
-  number,
-  {
-    rating: number; // this is the MMR
-    tier: string;
-    division: string;
-    tierId: number;
-    divisionId: number;
-    collectDate: string; // parseable as Date
-  }[]
->;
+export interface HistoryPoint {
+  rating: number; // this is the MMR
+  tier: string;
+  division: string;
+  tierId: number;
+  divisionId: number;
+  collectDate: string; // parseable as Date
+}
+export type DistData = Record<PlaylistId, HistoryPoint[]>;

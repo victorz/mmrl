@@ -7,7 +7,10 @@ import PlaylistCard from "./PlaylistCard.vue";
 
 const props = defineProps<{ profileId: string }>();
 const tracker = useTrackerStore();
+// TODO: Move this to the App component, perhaps. Or main? Not sure how to use
+// the Suspense component with that.
 await tracker.getTrackerData(props.profileId);
+await tracker.getHistoryData(tracker.userData?.playerId ?? 0);
 
 const unranked = computed(
   (): Playlist => tracker.playlists.find((p) => p.playlistName === "Un-Ranked")!

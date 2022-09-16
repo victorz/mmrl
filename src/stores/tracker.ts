@@ -1,5 +1,10 @@
 import { defineStore } from "pinia";
-import { trackerData } from "../api/relay";
+import {
+  historyData,
+  HistoryMap,
+  PlaylistMap,
+  trackerData,
+} from "../api/relay";
 import { CareerStats, Playlist, SeasonRewardData, User } from "./types";
 
 export interface State {
@@ -8,6 +13,8 @@ export interface State {
   seasonRewardData: SeasonRewardData;
   playlists: Playlist[];
   stats: CareerStats | null;
+  playlistMap: PlaylistMap | null;
+  historyMap: HistoryMap | null;
 }
 
 export const useTrackerStore = defineStore("tracker", {
@@ -23,11 +30,17 @@ export const useTrackerStore = defineStore("tracker", {
       },
       seasonRewardWins: 0,
     },
+    playlistMap: null,
+    historyMap: null,
   }),
   actions: {
     async getTrackerData(platformId: string) {
       const data = await trackerData(platformId);
       this.$patch({ ...data });
+    },
+    async getHistoryData(playerId: number) {
+      const historyMap = await historyData(playerId);
+      this.$patch({ historyMap });
     },
   },
 });

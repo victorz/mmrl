@@ -1,6 +1,10 @@
 import { CareerStats, Playlist, SeasonRewardData, User } from "../stores/types";
 import {
+  DistData,
+  HistoryPoint,
   OverviewSegment,
+  PlaylistId,
+  PlaylistName,
   PlaylistSegment,
   Segment,
   UserProfile,
@@ -27,12 +31,34 @@ const isPlaylistSegment = (s: Segment): s is PlaylistSegment =>
 const isOverviewSegment = (s: Segment): s is OverviewSegment =>
   s.type === "overview";
 
-export function transform(profile: UserProfile): {
+export async function getHistoryData(playerId: number): Promise<DistData> {
+  const res = await fetch(`${HOST}/mmr/${playerId}`, {
+    mode: "cors",
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      `could not fetch history data: ${res.status} ${res.statusText}`
+    );
+  }
+
+  return await res.json();
+}
+
+export type HistoryMap = Map<PlaylistId, HistoryPoint[]>;
+export function transformHistory(history: DistData): HistoryMap {
+  return new Map(Object.entries(history).map(([k, v]) => [Number(k), v]));
+}
+
+export type PlaylistMap = Map<PlaylistId, PlaylistName>;
+
+export function transformProfile(profile: UserProfile): {
   userData: User;
   seasonRewardData: SeasonRewardData;
   playlists: Playlist[];
   currentSeason: number;
   stats: CareerStats;
+  playlistMap: PlaylistMap;
 } {
   const overview = profile.segments.find(isOverviewSegment);
 
@@ -95,9 +121,14 @@ export function transform(profile: UserProfile): {
       saves: overview?.stats.saves.value ?? 0,
       shots: overview?.stats.shots.value ?? 0,
     },
+    playlistMap: playlistNames,
   };
 }
 
 export async function trackerData(platformId: string) {
-  return transform(await getUserData(platformId));
+  return transformProfile(await getUserData(platformId));
+}
+
+export async function historyData(playerId: number) {
+  return transformHistory(await getHistoryData(playerId));
 }
