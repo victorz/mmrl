@@ -11,8 +11,20 @@
   text-rendering: optimizeLegibility;
 
   /* Colors */
-  --var-primary: #3c0629;
-  --var-highlight: #59003a;
+  --color-primary: #3c0629;
+  --color-highlight: #59003a;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  padding: 2em 2em 0 2em;
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  height: 100%;
 }
 
 #app {
@@ -21,11 +33,9 @@
   min-width: 720px;
   max-width: 1080px;
   margin: 0 auto;
-  padding: 2rem;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: black;
-  }
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 16px 16px 0 0;
+  border: 1px solid var(--color-highlight);
+  overflow: hidden;
 }
