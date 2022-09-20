@@ -22,7 +22,7 @@ const percentileColor = computed(
       <div>{{ playlist.playlistName }}</div>
       <div>
         {{ playlist.division.name }}
-        <span class="percentile">({{ percentile }})</span>
+        <span class="percentile">{{ percentile }}</span>
       </div>
     </span>
   </div>
@@ -39,13 +39,9 @@ const percentileColor = computed(
 }
 .percentile {
   font-size: smaller;
-  opacity: 80%;
+  vertical-align: bottom;
   color: v-bind(percentileColor);
-}
-@media (prefers-color-scheme: light) {
-  .percentile {
-    filter: brightness(50%);
-  }
+  margin-left: 0.25ex;
 }
 img {
   width: 56px;
