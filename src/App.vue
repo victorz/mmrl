@@ -47,6 +47,7 @@ main {
 .loading::after {
   animation: ellipsis 3s linear infinite;
   content: "...";
+  user-select: all;
 }
 
 @keyframes ellipsis {
